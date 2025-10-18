@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.14" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HouseLedger.Domain\HouseLedger.Domain.csproj" />
+    <ProjectReference Include="..\HouseLedger.Contracts\HouseLedger.Contracts.csproj" />
+    <ProjectReference Include="..\HouseLedger.Infrastructure\HouseLedger.Infrastructure.csproj" />
+    <ProjectReference Include="..\HouseLedger.Services\HouseLedger.Services.csproj" />
+  </ItemGroup>
+
+</Project>
