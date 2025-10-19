@@ -140,14 +140,15 @@ app.MapHealthChecks("/health/ready", new Microsoft.AspNetCore.Diagnostics.Health
 });
 
 // ===== API ENDPOINTS =====
-var versionSet = app.NewApiVersionSet()
+var apiVersionSet = app.NewApiVersionSet()
     .HasApiVersion(new ApiVersion(1, 0))
     .ReportApiVersions()
     .Build();
 
-// V1 Endpoints
-var v1Group = app.MapGroup("/api/v{version:apiVersion}")
-    .WithApiVersionSet(versionSet);
+// V1 Endpoints - Use explicit version number instead of placeholder
+var v1Group = app.MapGroup("/api/v1")
+    .WithApiVersionSet(apiVersionSet)
+    .HasApiVersion(1, 0);
 
 // Transaction endpoints
 v1Group.MapGroup("/transactions")
