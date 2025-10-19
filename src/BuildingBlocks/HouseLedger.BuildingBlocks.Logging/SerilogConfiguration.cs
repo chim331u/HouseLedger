@@ -55,7 +55,7 @@ public static class SerilogConfiguration
 
         loggerConfig.WriteTo.File(
             new CompactJsonFormatter(), // JSON format for files
-            path: Path.Combine(logPath, "housledger-.json"),
+            path: Path.Combine(logPath, "houseledger-.json"),
             rollingInterval: RollingInterval.Day, // Question 3: Rolling by date
             retainedFileCountLimit: 30, // Question 3: Keep 30 days
             restrictedToMinimumLevel: GetMinimumLogLevel(configuration, environment, "File"));

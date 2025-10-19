@@ -1,0 +1,6 @@
+@HouseLedger.Api_HostAddress = http://localhost:5095
+
+GET {{HouseLedger.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

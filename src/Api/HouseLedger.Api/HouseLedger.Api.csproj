@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Asp.Versioning.Http" Version="8.1.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="9.0.10" />
+    <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="9.0.10" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="7.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Services\HouseLedger.Services.Finance\HouseLedger.Services.Finance.Application\HouseLedger.Services.Finance.Application.csproj" />
+    <ProjectReference Include="..\..\Services\HouseLedger.Services.Finance\HouseLedger.Services.Finance.Infrastructure\HouseLedger.Services.Finance.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Services\HouseLedger.Services.Ancillary\HouseLedger.Services.Ancillary.Application\HouseLedger.Services.Ancillary.Application.csproj" />
+    <ProjectReference Include="..\..\Services\HouseLedger.Services.Ancillary\HouseLedger.Services.Ancillary.Infrastructure\HouseLedger.Services.Ancillary.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\BuildingBlocks\HouseLedger.BuildingBlocks.Logging\HouseLedger.BuildingBlocks.Logging.csproj" />
+  </ItemGroup>
+
+</Project>

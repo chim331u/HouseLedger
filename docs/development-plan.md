@@ -78,55 +78,70 @@
 | 7.8 | Add CORS + health checks | ✅ Completed | Oct 19 | Oct 19 | Flexible CORS, /health endpoints |
 | 7.9 | Add request/response logging | ✅ Completed | Oct 19 | Oct 19 | Custom middleware with Serilog |
 | | | | | | |
-| **Phase 8** | **Finance Service - Features** | 🔲 **Not Started** | - | - | Implement business logic |
-| 8.1 | Implement CreateTransaction (MediatR) | 🔲 Not Started | - | - | Command + Handler + Validator |
-| 8.2 | Implement UploadTransactions (MediatR) | 🔲 Not Started | - | - | CSV upload handler |
-| 8.3 | Implement CategorizeTransaction (MediatR) | 🔲 Not Started | - | - | ML categorization |
-| 8.4 | Implement GetTransactions (Service) | 🔲 Not Started | - | - | Query service |
-| 8.5 | Implement GetAccounts (Service) | 🔲 Not Started | - | - | Query service |
-| 8.6 | Implement GetBalances (Service) | 🔲 Not Started | - | - | Query service |
+| **Phase 8** | **Ancillary Service (Currency, Country)** | 🔲 **Not Started** | - | - | Separate service for reference data |
+| 8.1 | Create Ancillary.Domain project | 🔲 Not Started | - | - | Currency, Country entities |
+| 8.2 | Create Ancillary.Infrastructure project | 🔲 Not Started | - | - | AncillaryDbContext + EF configurations |
+| 8.3 | Create Ancillary.Application project | 🔲 Not Started | - | - | Query services + CRUD commands |
+| 8.4 | Create Ancillary.Api project | 🔲 Not Started | - | - | Minimal APIs |
+| 8.5 | Create Currency CRUD | 🔲 Not Started | - | - | Domain, Commands, Services, API |
+| 8.6 | Create Country CRUD | 🔲 Not Started | - | - | Domain, Commands, Services, API |
+| 8.7 | Configure DI and Serilog | 🔲 Not Started | - | - | Full service configuration |
+| 8.8 | Test Ancillary API | 🔲 Not Started | - | - | Verify all endpoints work |
 | | | | | | |
-| **Phase 9** | **Bills Service** | 🔲 **Not Started** | - | - | Bills management |
-| 9.1 | Create Bills.Domain | 🔲 Not Started | - | - | Bill, Supplier, ReadInBill entities |
-| 9.2 | Create Bills.Infrastructure | 🔲 Not Started | - | - | BillsDbContext |
-| 9.3 | Create Bills.Application | 🔲 Not Started | - | - | Features + Services |
-| 9.4 | Create Bills.Api | 🔲 Not Started | - | - | API endpoints |
+| **Phase 9** | **Complete Finance CRUD** | 🔲 **Not Started** | - | - | Bank, Account, Transaction, Balance |
+| 9.1 | Complete Bank CRUD | 🔲 Not Started | - | - | Create, Update, Delete commands + API |
+| 9.2 | Complete Account CRUD | 🔲 Not Started | - | - | Create, Update, Delete commands + API |
+| 9.3 | Complete Transaction CRUD | 🔲 Not Started | - | - | Update, Delete commands + API |
+| 9.4 | Implement CSV Upload | 🔲 Not Started | - | - | Bulk transaction import |
+| 9.5 | Implement Manual Categorization | 🔲 Not Started | - | - | Set category on transaction |
+| 9.6 | Complete Balance CRUD | 🔲 Not Started | - | - | Full CRUD + query service |
 | | | | | | |
-| **Phase 10** | **Salary Service** | 🔲 **Not Started** | - | - | Salary tracking |
-| 10.1 | Create Salary.Domain | 🔲 Not Started | - | - | Salary entity |
-| 10.2 | Create Salary.Infrastructure | 🔲 Not Started | - | - | SalaryDbContext |
-| 10.3 | Create Salary.Application | 🔲 Not Started | - | - | Features + Services |
-| 10.4 | Create Salary.Api | 🔲 Not Started | - | - | API endpoints |
+| **Phase 10** | **ML.NET Integration** | 🔲 **Not Started** | - | - | Transaction categorization |
+| 10.1 | Add ML.NET packages | 🔲 Not Started | - | - | Microsoft.ML |
+| 10.2 | Create ML model training | 🔲 Not Started | - | - | Train on confirmed categories |
+| 10.3 | Create prediction service | 🔲 Not Started | - | - | Categorize transactions |
+| 10.4 | Create ML API endpoints | 🔲 Not Started | - | - | Train, CategorizeAll |
 | | | | | | |
-| **Phase 11** | **Identity Service** | 🔲 **Not Started** | - | - | Authentication & Authorization |
-| 11.1 | Create Identity.Domain | 🔲 Not Started | - | - | User entities |
-| 11.2 | Create Identity.Infrastructure | 🔲 Not Started | - | - | IdentityDbContext + JWT |
-| 11.3 | Create Identity.Application | 🔲 Not Started | - | - | Login, Register, RefreshToken |
-| 11.4 | Create Identity.Api | 🔲 Not Started | - | - | Auth endpoints |
+| **Phase 11** | **Bills Service** | 🔲 **Not Started** | - | - | Bills management |
+| 11.1 | Create Bills.Domain | 🔲 Not Started | - | - | Bill, Supplier, ReadInBill entities |
+| 11.2 | Create Bills.Infrastructure | 🔲 Not Started | - | - | BillsDbContext |
+| 11.3 | Create Bills.Application | 🔲 Not Started | - | - | Features + Services |
+| 11.4 | Create Bills.Api | 🔲 Not Started | - | - | API endpoints |
 | | | | | | |
-| **Phase 12** | **Other Services** | 🔲 **Not Started** | - | - | Remaining services |
-| 12.1 | Create HouseThings service | 🔲 Not Started | - | - | Inventory management |
-| 12.2 | Create Ancillary service | 🔲 Not Started | - | - | Reference data |
-| 12.3 | Create Statistics service | 🔲 Not Started | - | - | Dashboard, analytics |
+| **Phase 12** | **Salary Service** | 🔲 **Not Started** | - | - | Salary tracking |
+| 12.1 | Create Salary.Domain | 🔲 Not Started | - | - | Salary entity |
+| 12.2 | Create Salary.Infrastructure | 🔲 Not Started | - | - | SalaryDbContext |
+| 12.3 | Create Salary.Application | 🔲 Not Started | - | - | Features + Services |
+| 12.4 | Create Salary.Api | 🔲 Not Started | - | - | API endpoints |
 | | | | | | |
-| **Phase 13** | **Deployment Preparation** | 🔲 **Not Started** | - | - | ARM32 NAS deployment |
-| 13.1 | Create Dockerfile (ARM32) | 🔲 Not Started | - | - | linux-arm base image |
-| 13.2 | Create docker-compose.yml | 🔲 Not Started | - | - | Monolith configuration |
-| 13.3 | Configure volume mounts | 🔲 Not Started | - | - | Data, logs, bills paths |
-| 13.4 | Test on ARM32 environment | 🔲 Not Started | - | - | QEMU or Raspberry Pi |
-| 13.5 | Optimize for 1GB RAM | 🔲 Not Started | - | - | Memory limits, monitoring |
-| 13.6 | Create deployment guide | 🔲 Not Started | - | - | Documentation for NAS |
+| **Phase 13** | **Identity Service** | 🔲 **Not Started** | - | - | Authentication & Authorization |
+| 13.1 | Create Identity.Domain | 🔲 Not Started | - | - | User entities |
+| 13.2 | Create Identity.Infrastructure | 🔲 Not Started | - | - | IdentityDbContext + JWT |
+| 13.3 | Create Identity.Application | 🔲 Not Started | - | - | Login, Register, RefreshToken |
+| 13.4 | Create Identity.Api | 🔲 Not Started | - | - | Auth endpoints |
 | | | | | | |
-| **Phase 14** | **Testing & Quality** | 🔲 **Not Started** | - | - | Comprehensive testing |
-| 14.1 | Unit tests for handlers | 🔲 Not Started | - | - | Business logic tests |
-| 14.2 | Integration tests for repositories | 🔲 Not Started | - | - | Database tests |
-| 14.3 | API tests for endpoints | 🔲 Not Started | - | - | Controller tests |
-| 14.4 | E2E tests for scenarios | 🔲 Not Started | - | - | Full workflow tests |
+| **Phase 14** | **Other Services** | 🔲 **Not Started** | - | - | Remaining services |
+| 14.1 | Create HouseThings service | 🔲 Not Started | - | - | Inventory management |
+| 14.2 | Create Statistics service | 🔲 Not Started | - | - | Dashboard, analytics |
 | | | | | | |
-| **Phase 15** | **Frontend Migration** | 🔲 **Not Started** | - | - | Blazor Web + MAUI |
-| 15.1 | Update Blazor Web | 🔲 Not Started | - | - | API client updates |
-| 15.2 | Update MAUI app | 🔲 Not Started | - | - | Mobile app updates |
-| 15.3 | Add SignalR for notifications | 🔲 Not Started | - | - | Real-time updates |
+| **Phase 15** | **Deployment Preparation** | 🔲 **Not Started** | - | - | ARM32 NAS deployment |
+| 15.1 | Create Dockerfile (ARM32) | 🔲 Not Started | - | - | linux-arm base image |
+| 15.2 | Create docker-compose.yml | 🔲 Not Started | - | - | Monolith configuration |
+| 15.3 | Configure volume mounts | 🔲 Not Started | - | - | Data, logs, bills paths |
+| 15.4 | Test on ARM32 environment | 🔲 Not Started | - | - | QEMU or Raspberry Pi |
+| 15.5 | Optimize for 1GB RAM | 🔲 Not Started | - | - | Memory limits, monitoring |
+| 15.6 | Create deployment guide | 🔲 Not Started | - | - | Documentation for NAS |
+| | | | | | |
+| **Phase 16** | **Testing & Quality** | 🔲 **Not Started** | - | - | Comprehensive testing |
+| 16.1 | Unit tests for handlers | 🔲 Not Started | - | - | Business logic tests |
+| 16.2 | Integration tests for repositories | 🔲 Not Started | - | - | Database tests |
+| 16.3 | API tests for endpoints | 🔲 Not Started | - | - | Controller tests |
+| 16.4 | E2E tests for scenarios | 🔲 Not Started | - | - | Full workflow tests |
+| | | | | | |
+| **Phase 17** | **Frontend Migration** | 🔲 **Not Started** | - | - | Blazor Web + MAUI |
+| 17.1 | Update Blazor Web | 🔲 Not Started | - | - | API client updates |
+| 17.2 | Update MAUI app | 🔲 Not Started | - | - | Mobile app updates |
+| 17.3 | Add SignalR for notifications | 🔲 Not Started | - | - | Real-time updates |
 
 **Legend:**
 - ✅ Completed
@@ -137,70 +152,43 @@
 
 ---
 
-## 🎯 Current Focus: Phase 8 - Finance Service Features
+## 🎯 Current Focus: Phase 8 - Ancillary Service (Currency, Country)
 
 ### What We Just Completed (Phase 7)
 
 ✅ **Finance.Api Project** created with:
-- **Minimal APIs** - Modern .NET approach with lambda-based endpoints (not controllers)
-- **API Versioning** - URL path versioning (/api/v1/) using Asp.Versioning.Http
-- **Swagger/OpenAPI** - Basic Swagger UI for Development environment
-- **Global Exception Handling** - RFC 7807 ProblemDetails with validation support
-- **CORS Configuration** - Flexible middleware (configured for later)
-- **Health Checks** - /health (all), /health/live (liveness), /health/ready (database)
-- **Request/Response Logging** - Custom middleware with Serilog integration
-- **Serilog Integration** - Using BuildingBlocks.Logging
-- **Environment Configuration** - appsettings.json (Production: port 8080), appsettings.Development.json (ports 5000/5001), appsettings.Production.json
-- **Dependency Injection** - MediatR, FluentValidation, AutoMapper, Services, DbContext
-- **Endpoints Created:**
-  - **Transactions:** POST /api/v1/transactions (MediatR), GET /api/v1/transactions/{id}, GET /api/v1/transactions/account/{accountId} (paged), GET /api/v1/transactions/recent (paged)
-  - **Accounts:** GET /api/v1/accounts/{id}, GET /api/v1/accounts, GET /api/v1/accounts/bank/{bankId}
+- **Minimal APIs** - Modern .NET approach with lambda-based endpoints
+- **API Versioning** - URL path versioning (/api/v1/)
+- **Swagger/OpenAPI** - Basic Swagger UI for Development
+- **Global Exception Handling** - RFC 7807 ProblemDetails
+- **Health Checks** - /health, /health/live, /health/ready
+- **Request/Response Logging** - Custom middleware with Serilog
+- **Endpoints:** Transactions (4), Accounts (3)
 
-### What We Completed Earlier (Phase 6)
+### What's Next (Phase 8 - Ancillary Service)
 
-✅ **Finance.Application Project** created with:
-- **Contracts/DTOs** - 6 DTOs with paging support
-- **AutoMapper Profile** - Entity ↔ DTO mappings with Value Object handling
-- **Traditional Services** - AccountQueryService, TransactionQueryService (simple CRUD)
-- **MediatR Handler** - CreateTransactionCommand with validation and business logic
-- **Pipeline Behaviors** - LoggingBehavior, ValidationBehavior
-- **Serilog Integration** - Added logging to FinanceDbContext and TestConsole
+**Why Separate Ancillary Service?**
+- Currency is a foreign key in Bank entity (Finance service dependency)
+- Country is reference data shared across services
+- Clean separation of concerns (reference data vs transactional data)
+- Can be reused by other services (Bills, Salary, etc.)
 
-### Next Steps (Immediate - Phase 8)
+**Phase 8 Tasks:**
+1. Create **Ancillary.Domain** project - Currency, Country entities
+2. Create **Ancillary.Infrastructure** project - AncillaryDbContext, EF configurations, points to MM.db
+3. Create **Ancillary.Application** project - Query services, CRUD commands (MediatR), DTOs
+4. Create **Ancillary.Api** project - Minimal APIs for /api/v1/currencies and /api/v1/countries
+5. Configure DI, Serilog, Swagger, health checks
+6. Test all CRUD endpoints
 
-1. **Create Finance.Api Project**
-   ```bash
-   dotnet new webapi -n HouseLedger.Services.Finance.Api -f net8.0 \
-     -o src/Services/HouseLedger.Services.Finance/HouseLedger.Services.Finance.Api
-   ```
+**No Seed Data:**
+- Currencies and countries will be added manually via API
+- Keeps database migration simple
+- User has full control over reference data
 
-2. **Configure Dependencies**
-   - Add reference to Finance.Application
-   - Add reference to BuildingBlocks.Logging
-   - Configure MediatR in DI
-   - Configure AutoMapper in DI
-   - Configure Serilog using BuildingBlocks.Logging
-
-3. **Create Controllers (Hybrid Approach)**
-   ```csharp
-   public class TransactionsController
-   {
-       private readonly IMediator _mediator;                    // For complex operations
-       private readonly ITransactionQueryService _queryService; // For simple queries
-
-       [HttpPost] // Complex → MediatR
-       public async Task<ActionResult> Create(CreateTransactionCommand command)
-           => Ok(await _mediator.Send(command));
-
-       [HttpGet("{id}")] // Simple → Service
-       public async Task<ActionResult> GetById(int id)
-           => Ok(await _queryService.GetByIdAsync(id));
-   }
-   ```
-
-4. **Configure Swagger/OpenAPI**
-   - Add XML documentation
-   - Configure API versioning
+**After Phase 8:**
+- Phase 9: Complete Finance CRUD (Bank depends on Currency being available)
+- Phase 10: ML.NET Integration
 
 ---
 
@@ -215,11 +203,17 @@ HouseLedger/
 │   │   └── HouseLedger.Core.Domain/              ✅ Completed
 │   │
 │   ├── Services/
-│   │   └── HouseLedger.Services.Finance/
-│   │       ├── Finance.Domain/                   ✅ Completed
-│   │       ├── Finance.Infrastructure/           ✅ Completed
-│   │       ├── Finance.Application/              ✅ Completed
-│   │       └── Finance.Api/                      ✅ Completed
+│   │   ├── HouseLedger.Services.Finance/
+│   │   │   ├── Finance.Domain/                   ✅ Completed
+│   │   │   ├── Finance.Infrastructure/           ✅ Completed
+│   │   │   ├── Finance.Application/              ✅ Completed
+│   │   │   └── Finance.Api/                      ✅ Completed
+│   │   │
+│   │   └── HouseLedger.Services.Ancillary/
+│   │       ├── Ancillary.Domain/                 🔄 Phase 8
+│   │       ├── Ancillary.Infrastructure/         🔄 Phase 8
+│   │       ├── Ancillary.Application/            🔄 Phase 8
+│   │       └── Ancillary.Api/                    🔄 Phase 8
 │   │
 │   └── BuildingBlocks/
 │       └── HouseLedger.BuildingBlocks.Logging/   ✅ Completed
@@ -319,15 +313,15 @@ HouseLedger/
 
 ## 📊 Progress Metrics
 
-**Total Phases:** 15
-**Completed Phases:** 7 (47%)
+**Total Phases:** 17 (restructured from 15)
+**Completed Phases:** 7 (41%)
 **In Progress:** 0
-**Not Started:** 8 (53%)
+**Not Started:** 10 (59%)
 
-**Total Tasks:** 87 (added 9 tasks in Phase 7, removed 2)
-**Completed Tasks:** 49 (56%)
+**Total Tasks:** 99 (Phase 8: Ancillary +8, Phase 9: Finance CRUD +6, Phase 10: ML.NET +4)
+**Completed Tasks:** 49 (49%)
 **In Progress:** 0
-**Not Started:** 38 (44%)
+**Not Started:** 50 (51%)
 
 **Lines of Code (Estimate):**
 - Completed: ~3,500 lines
