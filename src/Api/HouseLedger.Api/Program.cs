@@ -2,6 +2,7 @@ using Asp.Versioning;
 using FluentValidation;
 using HouseLedger.Api.Endpoints.Ancillary;
 using HouseLedger.Api.Endpoints.Finance;
+using HouseLedger.BuildingBlocks.BackgroundJobs.Configuration;
 using HouseLedger.BuildingBlocks.Logging;
 using HouseLedger.Services.Ancillary.Application.Interfaces;
 using HouseLedger.Services.Ancillary.Application.Services;
@@ -18,6 +19,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // ===== SERILOG CONFIGURATION =====
 builder.ConfigureSerilog();
+
+// ===== HANGFIRE BACKGROUND JOBS =====
+builder.Services.AddHouseLedgerBackgroundJobs(builder.Configuration);
 
 // ===== SERVICES CONFIGURATION =====
 
@@ -127,6 +131,9 @@ if (app.Environment.IsDevelopment())
 
 // CORS
 app.UseCors();
+
+// Hangfire Dashboard
+app.UseHouseLedgerBackgroundJobs();
 
 // Serilog Request Logging
 app.UseSerilogRequestLogging(options =>

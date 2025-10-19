@@ -21,6 +21,7 @@
     <ProjectReference Include="..\..\Services\HouseLedger.Services.Ancillary\HouseLedger.Services.Ancillary.Application\HouseLedger.Services.Ancillary.Application.csproj" />
     <ProjectReference Include="..\..\Services\HouseLedger.Services.Ancillary\HouseLedger.Services.Ancillary.Infrastructure\HouseLedger.Services.Ancillary.Infrastructure.csproj" />
     <ProjectReference Include="..\..\BuildingBlocks\HouseLedger.BuildingBlocks.Logging\HouseLedger.BuildingBlocks.Logging.csproj" />
+    <ProjectReference Include="..\..\BuildingBlocks\HouseLedger.BuildingBlocks.BackgroundJobs\HouseLedger.BuildingBlocks.BackgroundJobs.csproj" />
   </ItemGroup>
 
 </Project>
