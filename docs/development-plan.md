@@ -67,14 +67,16 @@
 | 6.7 | Create AutoMapper profile | ✅ Completed | Oct 19 | Oct 19 | FinanceMappingProfile with Value Object handling |
 | 6.8 | Add Serilog logging to infrastructure | ✅ Completed | Oct 19 | Oct 19 | FinanceDbContext logging, TestConsole updated |
 | | | | | | |
-| **Phase 7** | **Finance Service - API Layer** | 🔲 **Not Started** | - | - | ASP.NET Core Web API |
-| 7.1 | Create Finance.Api project | 🔲 Not Started | - | - | Web API project |
-| 7.2 | Configure Serilog integration | 🔲 Not Started | - | - | Use BuildingBlocks.Logging |
-| 7.3 | Configure MediatR + DI | 🔲 Not Started | - | - | Dependency injection setup |
-| 7.4 | Create controllers | 🔲 Not Started | - | - | Transactions, Accounts, Balances |
-| 7.5 | Add Swagger/OpenAPI | 🔲 Not Started | - | - | API documentation |
-| 7.6 | Create appsettings files | 🔲 Not Started | - | - | Development, Production |
-| 7.7 | Test API endpoints | 🔲 Not Started | - | - | Manual testing |
+| **Phase 7** | **Finance Service - API Layer** | ✅ **Completed** | Oct 19, 2025 | Oct 19, 2025 | Minimal APIs with versioning |
+| 7.1 | Create Finance.Api project | ✅ Completed | Oct 19 | Oct 19 | Minimal APIs (not controllers) |
+| 7.2 | Configure Serilog integration | ✅ Completed | Oct 19 | Oct 19 | BuildingBlocks.Logging integrated |
+| 7.3 | Configure MediatR + DI | ✅ Completed | Oct 19 | Oct 19 | Full DI setup with pipeline behaviors |
+| 7.4 | Create Minimal API endpoints | ✅ Completed | Oct 19 | Oct 19 | Transactions, Accounts with URL versioning |
+| 7.5 | Add Swagger/OpenAPI | ✅ Completed | Oct 19 | Oct 19 | SwaggerGen configured |
+| 7.6 | Create appsettings files | ✅ Completed | Oct 19 | Oct 19 | Development, Production, base config |
+| 7.7 | Add global exception handling | ✅ Completed | Oct 19 | Oct 19 | RFC 7807 ProblemDetails |
+| 7.8 | Add CORS + health checks | ✅ Completed | Oct 19 | Oct 19 | Flexible CORS, /health endpoints |
+| 7.9 | Add request/response logging | ✅ Completed | Oct 19 | Oct 19 | Custom middleware with Serilog |
 | | | | | | |
 | **Phase 8** | **Finance Service - Features** | 🔲 **Not Started** | - | - | Implement business logic |
 | 8.1 | Implement CreateTransaction (MediatR) | 🔲 Not Started | - | - | Command + Handler + Validator |
@@ -135,19 +137,36 @@
 
 ---
 
-## 🎯 Current Focus: Phase 7 - Finance API Layer
+## 🎯 Current Focus: Phase 8 - Finance Service Features
 
-### What We Just Completed (Phase 6)
+### What We Just Completed (Phase 7)
+
+✅ **Finance.Api Project** created with:
+- **Minimal APIs** - Modern .NET approach with lambda-based endpoints (not controllers)
+- **API Versioning** - URL path versioning (/api/v1/) using Asp.Versioning.Http
+- **Swagger/OpenAPI** - Basic Swagger UI for Development environment
+- **Global Exception Handling** - RFC 7807 ProblemDetails with validation support
+- **CORS Configuration** - Flexible middleware (configured for later)
+- **Health Checks** - /health (all), /health/live (liveness), /health/ready (database)
+- **Request/Response Logging** - Custom middleware with Serilog integration
+- **Serilog Integration** - Using BuildingBlocks.Logging
+- **Environment Configuration** - appsettings.json (Production: port 8080), appsettings.Development.json (ports 5000/5001), appsettings.Production.json
+- **Dependency Injection** - MediatR, FluentValidation, AutoMapper, Services, DbContext
+- **Endpoints Created:**
+  - **Transactions:** POST /api/v1/transactions (MediatR), GET /api/v1/transactions/{id}, GET /api/v1/transactions/account/{accountId} (paged), GET /api/v1/transactions/recent (paged)
+  - **Accounts:** GET /api/v1/accounts/{id}, GET /api/v1/accounts, GET /api/v1/accounts/bank/{bankId}
+
+### What We Completed Earlier (Phase 6)
 
 ✅ **Finance.Application Project** created with:
-- **Contracts/DTOs** - 6 DTOs with paging support (PagedRequest, PagedResult, TransactionDto, AccountDto, BalanceDto, CreateTransactionRequest)
+- **Contracts/DTOs** - 6 DTOs with paging support
 - **AutoMapper Profile** - Entity ↔ DTO mappings with Value Object handling
 - **Traditional Services** - AccountQueryService, TransactionQueryService (simple CRUD)
 - **MediatR Handler** - CreateTransactionCommand with validation and business logic
-- **Pipeline Behaviors** - LoggingBehavior, ValidationBehavior (automatic for all requests)
+- **Pipeline Behaviors** - LoggingBehavior, ValidationBehavior
 - **Serilog Integration** - Added logging to FinanceDbContext and TestConsole
 
-### Next Steps (Immediate - Phase 7)
+### Next Steps (Immediate - Phase 8)
 
 1. **Create Finance.Api Project**
    ```bash
@@ -199,8 +218,8 @@ HouseLedger/
 │   │   └── HouseLedger.Services.Finance/
 │   │       ├── Finance.Domain/                   ✅ Completed
 │   │       ├── Finance.Infrastructure/           ✅ Completed
-│   │       ├── Finance.Application/              🔄 Next
-│   │       └── Finance.Api/                      🔲 Pending
+│   │       ├── Finance.Application/              ✅ Completed
+│   │       └── Finance.Api/                      ✅ Completed
 │   │
 │   └── BuildingBlocks/
 │       └── HouseLedger.BuildingBlocks.Logging/   ✅ Completed
@@ -301,24 +320,25 @@ HouseLedger/
 ## 📊 Progress Metrics
 
 **Total Phases:** 15
-**Completed Phases:** 6 (40%)
+**Completed Phases:** 7 (47%)
 **In Progress:** 0
-**Not Started:** 9 (60%)
+**Not Started:** 8 (53%)
 
-**Total Tasks:** 80
-**Completed Tasks:** 40 (50%)
+**Total Tasks:** 87 (added 9 tasks in Phase 7, removed 2)
+**Completed Tasks:** 49 (56%)
 **In Progress:** 0
-**Not Started:** 40 (50%)
+**Not Started:** 38 (44%)
 
 **Lines of Code (Estimate):**
-- Completed: ~2,500 lines
+- Completed: ~3,500 lines
 - Total Expected: ~15,000 lines
 
-**Projects Created:** 5
+**Projects Created:** 6
 - Core.Domain ✅
 - Finance.Domain ✅
 - Finance.Infrastructure ✅
 - Finance.Application ✅
+- Finance.Api ✅
 - BuildingBlocks.Logging ✅
 
 ---
