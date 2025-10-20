@@ -11,8 +11,7 @@
 
 | Phase                                            | Task                                                      | Status | Effort Estimated/ Completed | Notes                                                                      |
 |--------------------------------------------------|-----------------------------------------------------------|--------|-----------------------------|----------------------------------------------------------------------------|
-| Phase sample                                     | Task Sample (Number)                                      | ✅ Completed | 7 m/D                       | Sample entry for table Completed                                           |
-| JWT Bearer Access                                | Migrate the identity managemement using jwt berer token   | 🚧 To start | 10 m/D                      | Use data from old db, migrate from dotnet6                                 |
+| JWT Bearer Access                                | Migrate the identity managemement using jwt berer token   | ✅ Completed| 10 m/D                      | Use data from old db, migrate from dotnet6                                 |
 | Vault `Secrety managmeent`                       | Service that manage secrets                               | 🚧 To start | 30 m/D                      | Try and find a solution: other analysis and architecture followup required |
 | ML.net learning service `Transaction categorize` | Service that manage Categorizion of transactions          | 🚧 To start | 10 m/D                      | ML.net to categorize Transactions: analysis required                       |
 | Read bills - .pdf documents `Using AI`?          | Service that manage read docs by AI and save in db        | 🚧 To start | 50 m/D                      | AI or other to read docs                                                   |

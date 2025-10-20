@@ -1,7 +1,12 @@
 using Asp.Versioning;
 using FluentValidation;
 using HouseLedger.Api.Endpoints.Ancillary;
+using HouseLedger.Api.Endpoints.Auth;
 using HouseLedger.Api.Endpoints.Finance;
+using HouseLedger.Api.Infrastructure.Identity;
+using HouseLedger.Api.Services.Auth;
+using HouseLedger.BuildingBlocks.Authentication.Configuration;
+using HouseLedger.BuildingBlocks.Authentication.Services;
 using HouseLedger.BuildingBlocks.BackgroundJobs.Configuration;
 using HouseLedger.BuildingBlocks.Logging;
 using HouseLedger.Services.Ancillary.Application.Interfaces;
@@ -12,6 +17,7 @@ using HouseLedger.Services.Finance.Application.Interfaces;
 using HouseLedger.Services.Finance.Application.Services;
 using HouseLedger.Services.Finance.Infrastructure.Persistence;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
@@ -36,6 +42,36 @@ builder.Services.AddDbContext<FinanceDbContext>(options =>
 // Ancillary DbContext
 builder.Services.AddDbContext<AncillaryDbContext>(options =>
     options.UseSqlite(connectionString));
+
+// Identity DbContext (same MM.db database)
+builder.Services.AddDbContext<AppIdentityDbContext>(options =>
+    options.UseSqlite(connectionString));
+
+// ===== AUTHENTICATION CONFIGURATION =====
+
+// JWT Authentication (uses BuildingBlock)
+builder.Services.AddJwtAuthentication(builder.Configuration);
+
+// ASP.NET Core Identity (maps to existing AspNetUsers tables)
+builder.Services
+    .AddIdentityCore<IdentityUser>(options =>
+    {
+        // Password requirements (stronger than old system)
+        options.Password.RequireDigit = true;
+        options.Password.RequiredLength = 8;
+        options.Password.RequireNonAlphanumeric = true;
+        options.Password.RequireUppercase = true;
+        options.Password.RequireLowercase = true;
+
+        // User requirements
+        options.SignIn.RequireConfirmedAccount = false;
+        options.User.RequireUniqueEmail = true;
+    })
+    .AddEntityFrameworkStores<AppIdentityDbContext>();
+
+// Authentication Services
+builder.Services.AddScoped<ITokenService, JwtTokenService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 
 // MediatR with Pipeline Behaviors (Finance)
 builder.Services.AddMediatR(cfg =>
@@ -89,14 +125,17 @@ builder.Services.AddCors(options =>
     });
 });
 
-// Health Checks (both databases)
+// Health Checks (all databases)
 builder.Services.AddHealthChecks()
     .AddDbContextCheck<FinanceDbContext>(
         name: "finance-database",
         tags: new[] { "db", "sql", "sqlite", "finance" })
     .AddDbContextCheck<AncillaryDbContext>(
         name: "ancillary-database",
-        tags: new[] { "db", "sql", "sqlite", "ancillary" });
+        tags: new[] { "db", "sql", "sqlite", "ancillary" })
+    .AddDbContextCheck<AppIdentityDbContext>(
+        name: "identity-database",
+        tags: new[] { "db", "sql", "sqlite", "identity" });
 
 // OpenAPI/Swagger
 builder.Services.AddEndpointsApiExplorer();
@@ -106,10 +145,36 @@ builder.Services.AddSwaggerGen(options =>
     {
         Title = "HouseLedger API Gateway",
         Version = "v1",
-        Description = "Unified API Gateway for all HouseLedger services (Finance, Ancillary, etc.)",
+        Description = "Unified API Gateway for all HouseLedger services (Finance, Ancillary, Authentication, etc.)",
         Contact = new Microsoft.OpenApi.Models.OpenApiContact
         {
             Name = "HouseLedger Team"
+        }
+    });
+
+    // JWT Bearer Authentication
+    options.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = Microsoft.OpenApi.Models.SecuritySchemeType.Http,
+        Scheme = "bearer",
+        BearerFormat = "JWT",
+        In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+        Description = "Enter your JWT token in the format: {your token}"
+    });
+
+    options.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
+    {
+        {
+            new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+            {
+                Reference = new Microsoft.OpenApi.Models.OpenApiReference
+                {
+                    Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
         }
     });
 });
@@ -131,6 +196,9 @@ if (app.Environment.IsDevelopment())
 
 // CORS
 app.UseCors();
+
+// Authentication & Authorization (MUST be after UseCors and before endpoints)
+app.UseJwtAuthentication();
 
 // Hangfire Dashboard
 app.UseHouseLedgerBackgroundJobs();
@@ -193,6 +261,11 @@ v1Group.MapGroup("/suppliers")
     .MapSupplierEndpointsV1()
     .WithTags("Ancillary - Suppliers");
 
+// ===== AUTHENTICATION ENDPOINTS =====
+v1Group.MapGroup("/auth")
+    .MapAuthEndpointsV1()
+    .WithTags("Authentication");
+
 // Root endpoint (API info)
 app.MapGet("/", () => new
 {
@@ -202,7 +275,8 @@ app.MapGet("/", () => new
     Services = new
     {
         Finance = "Transactions, Accounts, Banks, Balances",
-        Ancillary = "Currencies, Countries, Currency Conversion Rates, Suppliers"
+        Ancillary = "Currencies, Countries, Currency Conversion Rates, Suppliers",
+        Authentication = "Login, Register, JWT Tokens"
     },
     Endpoints = new
     {
@@ -210,7 +284,8 @@ app.MapGet("/", () => new
         Health = "/health",
         HealthLive = "/health/live",
         HealthReady = "/health/ready",
-        ApiV1 = "/api/v1"
+        ApiV1 = "/api/v1",
+        Auth = "/api/v1/auth"
     }
 })
 .WithName("ApiInfo")
