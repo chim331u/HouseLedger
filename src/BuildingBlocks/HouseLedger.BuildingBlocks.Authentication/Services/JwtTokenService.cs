@@ -41,6 +41,8 @@ public class JwtTokenService : ITokenService
         try
         {
             _logger.LogDebug("Creating JWT token for user: {UserId}", user.Id);
+            _logger.LogInformation("JWT Settings - Issuer: {Issuer}, Audience: {Audience}, Expiration Minutes: {ExpirationMinutes}",
+                _jwtSettings.Issuer, _jwtSettings.Audience, _jwtSettings.TokenExpirationMinutes);
 
             var expiration = DateTime.UtcNow.AddMinutes(_jwtSettings.TokenExpirationMinutes);
             var claims = CreateClaims(user, additionalClaims);
@@ -88,7 +90,7 @@ public class JwtTokenService : ITokenService
         {
             new Claim(JwtRegisteredClaimNames.Sub, user.Id),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-            new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString(CultureInfo.InvariantCulture)),
+            // iat (Issued At) is automatically added by JwtSecurityToken, no need to add manually
             new Claim(ClaimTypes.NameIdentifier, user.Id),
             new Claim(ClaimTypes.Name, user.UserName ?? string.Empty),
             new Claim(ClaimTypes.Email, user.Email ?? string.Empty)

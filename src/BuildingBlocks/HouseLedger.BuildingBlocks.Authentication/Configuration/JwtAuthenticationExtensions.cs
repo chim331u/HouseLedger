@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 
 namespace HouseLedger.BuildingBlocks.Authentication.Configuration;
@@ -27,6 +28,14 @@ public static class JwtAuthenticationExtensions
         var jwtSettings = new JwtSettings();
         configuration.GetSection(JwtSettings.SectionName).Bind(jwtSettings);
         jwtSettings.Validate();
+
+        // Log the configuration values for debugging
+        var logger = services.BuildServiceProvider().GetService<ILogger<JwtSettings>>();
+        if (logger != null)
+        {
+            logger.LogInformation("JWT Configuration loaded - Issuer: {Issuer}, Audience: {Audience}, ExpirationMinutes: {ExpirationMinutes}",
+                jwtSettings.Issuer, jwtSettings.Audience, jwtSettings.TokenExpirationMinutes);
+        }
 
         // Register JwtSettings as options
         services.Configure<JwtSettings>(configuration.GetSection(JwtSettings.SectionName));
@@ -55,25 +64,58 @@ public static class JwtAuthenticationExtensions
                     Encoding.UTF8.GetBytes(jwtSettings.SecretKey))
             };
 
-            // Optional: Add custom events for logging
+            // Enhanced event handlers for debugging and logging
             options.Events = new JwtBearerEvents
             {
                 OnAuthenticationFailed = context =>
                 {
+                    var logger = context.HttpContext.RequestServices.GetService<ILogger<JwtBearerEvents>>();
+
                     if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
                     {
                         context.Response.Headers["Token-Expired"] = "true";
+                        logger?.LogWarning("JWT token expired for request {Path}", context.Request.Path);
                     }
+                    else
+                    {
+                        logger?.LogError(context.Exception,
+                            "JWT authentication failed for request {Path}. Error: {ErrorMessage}",
+                            context.Request.Path, context.Exception.Message);
+                    }
+
                     return Task.CompletedTask;
                 },
                 OnChallenge = context =>
                 {
-                    // Log authentication challenges if needed
+                    var logger = context.HttpContext.RequestServices.GetService<ILogger<JwtBearerEvents>>();
+                    logger?.LogWarning("JWT authentication challenge for request {Path}. Error: {Error}, ErrorDescription: {ErrorDescription}",
+                        context.Request.Path, context.Error, context.ErrorDescription);
                     return Task.CompletedTask;
                 },
                 OnTokenValidated = context =>
                 {
-                    // Log successful token validation if needed
+                    var logger = context.HttpContext.RequestServices.GetService<ILogger<JwtBearerEvents>>();
+                    var userId = context.Principal?.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+                    logger?.LogDebug("JWT token validated successfully for user {UserId} on request {Path}",
+                        userId, context.Request.Path);
+                    return Task.CompletedTask;
+                },
+                OnMessageReceived = context =>
+                {
+                    var logger = context.HttpContext.RequestServices.GetService<ILogger<JwtBearerEvents>>();
+
+                    if (!string.IsNullOrEmpty(context.Token))
+                    {
+                        // Log token receipt (first 20 chars only for security)
+                        var tokenPreview = context.Token.Length > 20 ? context.Token.Substring(0, 20) + "..." : context.Token;
+                        logger?.LogDebug("JWT token received for request {Path}: {TokenPreview}",
+                            context.Request.Path, tokenPreview);
+                    }
+                    else
+                    {
+                        logger?.LogDebug("No JWT token found in request {Path}", context.Request.Path);
+                    }
+
                     return Task.CompletedTask;
                 }
             };
