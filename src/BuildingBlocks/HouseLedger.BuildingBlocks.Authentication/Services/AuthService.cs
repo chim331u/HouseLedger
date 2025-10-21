@@ -1,12 +1,13 @@
-using HouseLedger.Api.Infrastructure.Identity;
-using HouseLedger.Api.Models.Auth;
+using HouseLedger.Api.Services.Auth;
 using HouseLedger.BuildingBlocks.Authentication.Configuration;
-using HouseLedger.BuildingBlocks.Authentication.Services;
+using HouseLedger.BuildingBlocks.Authentication.Contract;
+using HouseLedger.BuildingBlocks.Authentication.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace HouseLedger.Api.Services.Auth;
+namespace HouseLedger.BuildingBlocks.Authentication.Services;
 
 /// <summary>
 /// Authentication service implementation.

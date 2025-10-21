@@ -1,4 +1,4 @@
-namespace HouseLedger.Api.Models.Auth;
+namespace HouseLedger.BuildingBlocks.Authentication.Contract;
 
 /// <summary>
 /// Response model for successful authentication.

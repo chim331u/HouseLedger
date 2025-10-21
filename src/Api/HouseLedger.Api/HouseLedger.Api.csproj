@@ -26,4 +26,28 @@
     <ProjectReference Include="..\..\BuildingBlocks\HouseLedger.BuildingBlocks.Authentication\HouseLedger.BuildingBlocks.Authentication.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="Models\**" />
+    <Compile Remove="Services\**" />
+    <Compile Remove="Infrastructure\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="Models\**" />
+    <EmbeddedResource Remove="Services\**" />
+    <EmbeddedResource Remove="Infrastructure\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Models\**" />
+    <Content Remove="Services\**" />
+    <Content Remove="Infrastructure\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Models\**" />
+    <None Remove="Services\**" />
+    <None Remove="Infrastructure\**" />
+  </ItemGroup>
+
 </Project>

@@ -1,5 +1,6 @@
-using HouseLedger.Api.Models.Auth;
 using HouseLedger.Api.Services.Auth;
+using HouseLedger.BuildingBlocks.Authentication.Contract;
+using HouseLedger.BuildingBlocks.Authentication.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HouseLedger.Api.Endpoints.Auth;

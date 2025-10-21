@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace HouseLedger.Api.Models.Auth;
+namespace HouseLedger.BuildingBlocks.Authentication.Contract;
 
 /// <summary>
 /// Request model for user authentication.

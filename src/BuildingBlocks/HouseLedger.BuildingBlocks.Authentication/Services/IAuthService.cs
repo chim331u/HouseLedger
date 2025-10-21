@@ -1,4 +1,5 @@
-using HouseLedger.Api.Models.Auth;
+using HouseLedger.BuildingBlocks.Authentication.Contract;
+using HouseLedger.BuildingBlocks.Authentication.Models;
 
 namespace HouseLedger.Api.Services.Auth;
 
