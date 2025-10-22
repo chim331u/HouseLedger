@@ -32,6 +32,10 @@ public class CurrencyCommandService : ICurrencyCommandService
         _logger.LogInformation("Creating new currency: {CurrencyCode}", request.CurrencyCodeAlf3);
 
         var currency = _mapper.Map<Currency>(request);
+        currency.CreatedDate = DateTime.UtcNow;
+        currency.LastUpdatedDate = DateTime.UtcNow;
+        currency.IsActive = true;
+
         _context.Currencies.Add(currency);
         await _context.SaveChangesAsync(cancellationToken);
 

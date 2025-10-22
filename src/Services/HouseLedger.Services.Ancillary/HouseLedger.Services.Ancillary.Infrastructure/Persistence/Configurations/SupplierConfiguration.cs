@@ -43,8 +43,7 @@ public class SupplierConfiguration : IEntityTypeConfiguration<Supplier>
             .IsRequired();
 
         builder.Property(s => s.IsActive)
-            .IsRequired()
-            .HasDefaultValue(true);
+            .IsRequired();
 
         builder.Property(s => s.Note)
             .HasMaxLength(1000);

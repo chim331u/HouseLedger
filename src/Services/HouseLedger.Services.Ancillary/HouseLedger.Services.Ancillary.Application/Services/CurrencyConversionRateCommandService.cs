@@ -33,6 +33,10 @@ public class CurrencyConversionRateCommandService : ICurrencyConversionRateComma
             request.CurrencyCodeAlf3, request.ReferringDate);
 
         var rate = _mapper.Map<CurrencyConversionRate>(request);
+        rate.CreatedDate = DateTime.UtcNow;
+        rate.LastUpdatedDate = DateTime.UtcNow;
+        rate.IsActive = true;
+
         _context.CurrencyConversionRates.Add(rate);
         await _context.SaveChangesAsync(cancellationToken);
 

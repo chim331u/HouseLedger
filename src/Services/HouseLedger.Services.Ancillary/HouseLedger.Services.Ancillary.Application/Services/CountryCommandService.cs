@@ -32,6 +32,10 @@ public class CountryCommandService : ICountryCommandService
         _logger.LogInformation("Creating new country: {CountryCode}", request.CountryCodeAlf3);
 
         var country = _mapper.Map<Country>(request);
+        country.CreatedDate = DateTime.UtcNow;
+        country.LastUpdatedDate = DateTime.UtcNow;
+        country.IsActive = true;
+
         _context.Countries.Add(country);
         await _context.SaveChangesAsync(cancellationToken);
 

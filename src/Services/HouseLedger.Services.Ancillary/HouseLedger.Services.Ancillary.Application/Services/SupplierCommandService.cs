@@ -32,6 +32,10 @@ public class SupplierCommandService : ISupplierCommandService
         _logger.LogInformation("Creating new supplier: {SupplierName}", request.Name);
 
         var supplier = _mapper.Map<Supplier>(request);
+        supplier.CreatedDate = DateTime.UtcNow;
+        supplier.LastUpdatedDate = DateTime.UtcNow;
+        supplier.IsActive = true;
+
         _context.Suppliers.Add(supplier);
         await _context.SaveChangesAsync(cancellationToken);
 

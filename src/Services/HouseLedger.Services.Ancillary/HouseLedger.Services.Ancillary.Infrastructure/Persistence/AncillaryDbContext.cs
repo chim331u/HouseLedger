@@ -73,6 +73,8 @@ public class AncillaryDbContext : DbContext
 
         try
         {
+            
+            
             var result = await base.SaveChangesAsync(cancellationToken);
             _logger?.LogInformation("SaveChangesAsync completed successfully. {ChangeCount} entities affected", result);
             return result;
@@ -112,6 +114,7 @@ public class AncillaryDbContext : DbContext
             {
                 entity.CreatedDate = DateTime.UtcNow;
                 entity.LastUpdatedDate = DateTime.UtcNow;
+                entity.IsActive = true;
             }
             else if (entry.State == EntityState.Modified)
             {
