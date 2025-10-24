@@ -25,6 +25,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\Services\HouseLedger.Services.Salary\HouseLedger.Services.Salary.Application\HouseLedger.Services.Salary.Application.csproj" />
     <ProjectReference Include="..\..\src\Services\HouseLedger.Services.Salary\HouseLedger.Services.Salary.Infrastructure\HouseLedger.Services.Salary.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\src\Services\HouseLedger.Services.Ancillary\HouseLedger.Services.Ancillary.Application\HouseLedger.Services.Ancillary.Application.csproj" />
   </ItemGroup>
 
 </Project>

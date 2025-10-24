@@ -3,6 +3,7 @@
   <ItemGroup>
     <ProjectReference Include="..\HouseLedger.Services.Salary.Domain\HouseLedger.Services.Salary.Domain.csproj" />
     <ProjectReference Include="..\HouseLedger.Services.Salary.Infrastructure\HouseLedger.Services.Salary.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\HouseLedger.Services.Ancillary\HouseLedger.Services.Ancillary.Application\HouseLedger.Services.Ancillary.Application.csproj" />
   </ItemGroup>
 
   <ItemGroup>

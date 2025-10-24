@@ -1,5 +1,8 @@
 using AutoMapper;
 using FluentAssertions;
+using HouseLedger.Services.Ancillary.Application.Contracts.Currencies;
+using HouseLedger.Services.Ancillary.Application.Contracts.CurrencyConversionRates;
+using HouseLedger.Services.Ancillary.Application.Interfaces;
 using HouseLedger.Services.Salary.Application.Contracts.Salaries;
 using HouseLedger.Services.Salary.Application.Mapping;
 using HouseLedger.Services.Salary.Application.Services;
@@ -19,6 +22,8 @@ public class SalaryCommandServiceTests : IDisposable
     private readonly SalaryDbContext _context;
     private readonly IMapper _mapper;
     private readonly Mock<ILogger<SalaryCommandService>> _loggerMock;
+    private readonly Mock<ICurrencyQueryService> _currencyQueryServiceMock;
+    private readonly Mock<ICurrencyConversionRateQueryService> _conversionRateQueryServiceMock;
     private readonly SalaryCommandService _service;
 
     public SalaryCommandServiceTests()
@@ -40,8 +45,28 @@ public class SalaryCommandServiceTests : IDisposable
         // Setup logger mock
         _loggerMock = new Mock<ILogger<SalaryCommandService>>();
 
+        // Setup currency service mocks
+        _currencyQueryServiceMock = new Mock<ICurrencyQueryService>();
+        _conversionRateQueryServiceMock = new Mock<ICurrencyConversionRateQueryService>();
+
+        // Setup default mock behavior: return EUR currency with rate 1.0
+        _currencyQueryServiceMock
+            .Setup(x => x.GetByIdAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new CurrencyDto
+            {
+                Id = 1,
+                Name = "Euro",
+                CurrencyCodeAlf3 = "EUR",
+                CurrencyCodeNum3 = "978"
+            });
+
         // Create service
-        _service = new SalaryCommandService(_context, _mapper, _loggerMock.Object);
+        _service = new SalaryCommandService(
+            _context,
+            _mapper,
+            _loggerMock.Object,
+            _currencyQueryServiceMock.Object,
+            _conversionRateQueryServiceMock.Object);
     }
 
     [Fact]
