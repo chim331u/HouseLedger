@@ -9,13 +9,21 @@
 
 ## ✅ Completed Tasks Summary
 
-| Phase                                            | Task                                                      | Status | Effort Estimated/ Completed | Notes                                                                      |
-|--------------------------------------------------|-----------------------------------------------------------|--------|-----------------------------|----------------------------------------------------------------------------|
-| JWT Bearer Access                                | Migrate the identity managemement using jwt berer token   | ✅ Completed| 10 m/D                      | Use data from old db, migrate from dotnet6                                 |
-| Vault `Secrety managmeent`                       | Service that manage secrets                               | 🚧 To start | 30 m/D                      | Try and find a solution: other analysis and architecture followup required |
-| ML.net learning service `Transaction categorize` | Service that manage Categorizion of transactions          | 🚧 To start | 10 m/D                      | ML.net to categorize Transactions: analysis required                       |
-| Read bills - .pdf documents `Using AI`?          | Service that manage read docs by AI and save in db        | 🚧 To start | 50 m/D                      | AI or other to read docs                                                   |
-| Currency Rate update  `Schedule daily job`       | Service that update the currency rate, daily job hangfire | 🚧 To start | 5 m/D                      | service + schedule recurring job                                           |
+#| Phase                                            | Task                                                      | Status        | Effort Estimated/ Completed | Notes                                                                      |
+--|--------------------------------------------------|-----------------------------------------------------------|---------------|-----------------------------|----------------------------------------------------------------------------|
+1| JWT Bearer Access                                | Migrate the identity managemement using jwt berer token   | ✅ Completed   | 10 m/D                      | Use data from old db, migrate from dotnet6                                 |
+2| Vault `Secrety managmeent`                       | Service that manage secrets                               | 🚧 To start   | 30 m/D                      | Try and find a solution: other analysis and architecture followup required |
+3| ML.net learning service `Transaction categorize` | Service that manage Categorizion of transactions          | 🚧 To start   | 10 m/D                      | ML.net to categorize Transactions: analysis required                       |
+4| Read bills - .pdf documents `Using AI`?          | Service that manage read docs by AI and save in db        | 🚧 To start   | 50 m/D                      | AI or other to read docs                                                   |
+5| Currency Rate update  `Schedule daily job`       | Service that update the currency rate, daily job hangfire | 🚧 To start   | 5 m/D                       | service + schedule recurring job                                           |
+6| Balance                                          | Balance controller and services                           | 🚧 To start   | 2 m/D                       |                                            |
+7| Salary                                           | Salary controller and services                            | 🔨 In Progress | 2 m/D                       |                                            |
+8| House thinks                                     | House thinks controller and services                      | 🚧 To start   | 3 m/D                       |                                            |
+9| Bill                                             | Bill management --> see AI                                | 🚧 To start   | x m/D                       |                                            |
+10| Identiy Access - Secrets                         | ex Identity Access --> secrets: see vault                 | 🚧 To start   | x m/D                       |                                            |
+11| Statistics                                       | Dashboard, statistics and charts                          | 🚧 To start   | x m/D                       |                                            |
+12| Local Users                                      | Local Users for salary and identity                       | 🔨 In Progress   | x m/D                       |                                            |
+13|                                                  |                                                           | 🚧 To start   | x m/D                       |                                            |
 
 ---
 

@@ -24,6 +24,8 @@
     <ProjectReference Include="..\..\BuildingBlocks\HouseLedger.BuildingBlocks.Logging\HouseLedger.BuildingBlocks.Logging.csproj" />
     <ProjectReference Include="..\..\BuildingBlocks\HouseLedger.BuildingBlocks.BackgroundJobs\HouseLedger.BuildingBlocks.BackgroundJobs.csproj" />
     <ProjectReference Include="..\..\BuildingBlocks\HouseLedger.BuildingBlocks.Authentication\HouseLedger.BuildingBlocks.Authentication.csproj" />
+    <ProjectReference Include="..\..\Services\HouseLedger.Services.Salary\HouseLedger.Services.Salary.Application\HouseLedger.Services.Salary.Application.csproj" />
+    <ProjectReference Include="..\..\Services\HouseLedger.Services.Salary\HouseLedger.Services.Salary.Infrastructure\HouseLedger.Services.Salary.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>

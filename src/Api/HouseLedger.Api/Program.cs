@@ -3,6 +3,7 @@ using FluentValidation;
 using HouseLedger.Api.Endpoints.Ancillary;
 using HouseLedger.Api.Endpoints.Auth;
 using HouseLedger.Api.Endpoints.Finance;
+using HouseLedger.Api.Endpoints.Salary;
 using HouseLedger.Api.Services.Auth;
 using HouseLedger.BuildingBlocks.Authentication.Configuration;
 using HouseLedger.BuildingBlocks.Authentication.Models;
@@ -16,6 +17,9 @@ using HouseLedger.Services.Finance.Application.Behaviors;
 using HouseLedger.Services.Finance.Application.Interfaces;
 using HouseLedger.Services.Finance.Application.Services;
 using HouseLedger.Services.Finance.Infrastructure.Persistence;
+using HouseLedger.Services.Salary.Application.Interfaces;
+using HouseLedger.Services.Salary.Application.Services;
+using HouseLedger.Services.Salary.Infrastructure.Persistence;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -47,6 +51,10 @@ builder.Services.AddDbContext<AncillaryDbContext>(options =>
 builder.Services.AddDbContext<AppIdentityDbContext>(options =>
     options.UseSqlite(connectionString));
 
+// Salary DbContext
+builder.Services.AddDbContext<SalaryDbContext>(options =>
+    options.UseSqlite(connectionString));
+
 // ===== AUTHENTICATION CONFIGURATION =====
 
 // JWT Authentication (uses BuildingBlock)
@@ -73,21 +81,22 @@ builder.Services
 builder.Services.AddScoped<ITokenService, JwtTokenService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 
-// MediatR with Pipeline Behaviors (Finance)
+// MediatR with Pipeline Behaviors (Finance only)
 builder.Services.AddMediatR(cfg =>
 {
-    cfg.RegisterServicesFromAssembly(typeof(AccountQueryService).Assembly);
+    cfg.RegisterServicesFromAssembly(typeof(AccountQueryService).Assembly); // Finance
     cfg.AddOpenBehavior(typeof(LoggingBehavior<,>));
     cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));
 });
 
-// FluentValidation (Finance + Ancillary)
+// FluentValidation (Finance only - Ancillary and Salary use simple validation)
 builder.Services.AddValidatorsFromAssembly(typeof(AccountQueryService).Assembly);
 
-// AutoMapper (Finance + Ancillary)
+// AutoMapper (Finance + Ancillary + Salary)
 builder.Services.AddAutoMapper(
     typeof(AccountQueryService).Assembly,           // Finance mappings
-    typeof(CurrencyQueryService).Assembly);         // Ancillary mappings
+    typeof(CurrencyQueryService).Assembly,          // Ancillary mappings
+    typeof(SalaryQueryService).Assembly);          // Salary mappings
 
 // Finance Query Services
 builder.Services.AddScoped<IAccountQueryService, AccountQueryService>();
@@ -104,6 +113,10 @@ builder.Services.AddScoped<ICurrencyCommandService, CurrencyCommandService>();
 builder.Services.AddScoped<ICountryCommandService, CountryCommandService>();
 builder.Services.AddScoped<ICurrencyConversionRateCommandService, CurrencyConversionRateCommandService>();
 builder.Services.AddScoped<ISupplierCommandService, SupplierCommandService>();
+
+// Salary Query and Command Services
+builder.Services.AddScoped<ISalaryQueryService, SalaryQueryService>();
+builder.Services.AddScoped<ISalaryCommandService, SalaryCommandService>();
 
 // API Versioning (URL path: /api/v1/)
 builder.Services.AddApiVersioning(options =>
@@ -135,7 +148,10 @@ builder.Services.AddHealthChecks()
         tags: new[] { "db", "sql", "sqlite", "ancillary" })
     .AddDbContextCheck<AppIdentityDbContext>(
         name: "identity-database",
-        tags: new[] { "db", "sql", "sqlite", "identity" });
+        tags: new[] { "db", "sql", "sqlite", "identity" })
+    .AddDbContextCheck<SalaryDbContext>(
+        name: "salary-database",
+        tags: new[] { "db", "sql", "sqlite", "salary" });
 
 // OpenAPI/Swagger
 builder.Services.AddEndpointsApiExplorer();
@@ -261,6 +277,11 @@ v1Group.MapGroup("/suppliers")
     .MapSupplierEndpointsV1()
     .WithTags("Ancillary - Suppliers");
 
+// ===== SALARY SERVICE ENDPOINTS =====
+v1Group.MapGroup("/salaries")
+    .MapSalaryEndpointsV1()
+    .WithTags("Salary - Salaries");
+
 // ===== AUTHENTICATION ENDPOINTS =====
 v1Group.MapGroup("/auth")
     .MapAuthEndpointsV1()
@@ -276,6 +297,7 @@ app.MapGet("/", () => new
     {
         Finance = "Transactions, Accounts, Banks, Balances",
         Ancillary = "Currencies, Countries, Currency Conversion Rates, Suppliers",
+        Salary = "Salary Entries",
         Authentication = "Login, Register, JWT Tokens"
     },
     Endpoints = new
