@@ -2,6 +2,7 @@ using AutoMapper;
 using HouseLedger.Services.Ancillary.Application.Contracts.Countries;
 using HouseLedger.Services.Ancillary.Application.Contracts.Currencies;
 using HouseLedger.Services.Ancillary.Application.Contracts.CurrencyConversionRates;
+using HouseLedger.Services.Ancillary.Application.Contracts.ServiceUsers;
 using HouseLedger.Services.Ancillary.Application.Contracts.Suppliers;
 using HouseLedger.Services.Ancillary.Domain.Entities;
 
@@ -77,6 +78,23 @@ public class AncillaryMappingProfile : Profile
 
         // UpdateSupplierRequest → Supplier
         CreateMap<UpdateSupplierRequest, Supplier>()
+            .ForMember(dest => dest.Id, opt => opt.Ignore())
+            .ForMember(dest => dest.CreatedDate, opt => opt.Ignore())
+            .ForMember(dest => dest.LastUpdatedDate, opt => opt.Ignore())
+            .ForMember(dest => dest.IsActive, opt => opt.Ignore());
+
+        // ServiceUser → ServiceUserDto
+        CreateMap<ServiceUser, ServiceUserDto>();
+
+        // CreateServiceUserRequest → ServiceUser
+        CreateMap<CreateServiceUserRequest, ServiceUser>()
+            .ForMember(dest => dest.Id, opt => opt.Ignore())
+            .ForMember(dest => dest.CreatedDate, opt => opt.Ignore())
+            .ForMember(dest => dest.LastUpdatedDate, opt => opt.Ignore())
+            .ForMember(dest => dest.IsActive, opt => opt.MapFrom(src => true));
+
+        // UpdateServiceUserRequest → ServiceUser
+        CreateMap<UpdateServiceUserRequest, ServiceUser>()
             .ForMember(dest => dest.Id, opt => opt.Ignore())
             .ForMember(dest => dest.CreatedDate, opt => opt.Ignore())
             .ForMember(dest => dest.LastUpdatedDate, opt => opt.Ignore())

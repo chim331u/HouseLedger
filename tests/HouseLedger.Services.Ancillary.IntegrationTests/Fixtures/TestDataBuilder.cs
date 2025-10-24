@@ -2,6 +2,7 @@ using Bogus;
 using HouseLedger.Services.Ancillary.Application.Contracts.Countries;
 using HouseLedger.Services.Ancillary.Application.Contracts.Currencies;
 using HouseLedger.Services.Ancillary.Application.Contracts.CurrencyConversionRates;
+using HouseLedger.Services.Ancillary.Application.Contracts.ServiceUsers;
 using HouseLedger.Services.Ancillary.Application.Contracts.Suppliers;
 using HouseLedger.Services.Ancillary.Domain.Entities;
 
@@ -170,6 +171,55 @@ public static class TestDataBuilder
             Type = Faker.Commerce.Department(),
             Description = Faker.Lorem.Sentence(),
             CreatedDate = DateTime.UtcNow,
+            LastUpdatedDate = DateTime.UtcNow,
+            IsActive = isActive ?? true
+        };
+    }
+
+    #endregion
+
+    #region ServiceUser Test Data
+
+    public static CreateServiceUserRequest CreateServiceUserRequest(
+        string? name = null,
+        string? surname = null,
+        string? note = null)
+    {
+        return new CreateServiceUserRequest
+        {
+            Name = name ?? Faker.Name.FirstName(),
+            Surname = surname ?? Faker.Name.LastName(),
+            Note = note
+        };
+    }
+
+    public static UpdateServiceUserRequest UpdateServiceUserRequest(
+        string? name = null,
+        string? surname = null,
+        string? note = null)
+    {
+        return new UpdateServiceUserRequest
+        {
+            Id = Faker.Random.Int(1, 1000),
+            Name = name ?? Faker.Name.FirstName(),
+            Surname = surname ?? Faker.Name.LastName(),
+            Note = note
+        };
+    }
+
+    public static ServiceUser ServiceUser(
+        int? id = null,
+        string? name = null,
+        string? surname = null,
+        DateTime? createdDate = null,
+        bool? isActive = null)
+    {
+        return new ServiceUser
+        {
+            Id = id ?? Faker.Random.Int(1, 1000),
+            Name = name ?? Faker.Name.FirstName(),
+            Surname = surname ?? Faker.Name.LastName(),
+            CreatedDate = createdDate ?? DateTime.UtcNow,
             LastUpdatedDate = DateTime.UtcNow,
             IsActive = isActive ?? true
         };

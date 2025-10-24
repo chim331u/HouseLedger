@@ -107,12 +107,14 @@ builder.Services.AddScoped<ICurrencyQueryService, CurrencyQueryService>();
 builder.Services.AddScoped<ICountryQueryService, CountryQueryService>();
 builder.Services.AddScoped<ICurrencyConversionRateQueryService, CurrencyConversionRateQueryService>();
 builder.Services.AddScoped<ISupplierQueryService, SupplierQueryService>();
+builder.Services.AddScoped<IServiceUserQueryService, ServiceUserQueryService>();
 
 // Ancillary Command Services
 builder.Services.AddScoped<ICurrencyCommandService, CurrencyCommandService>();
 builder.Services.AddScoped<ICountryCommandService, CountryCommandService>();
 builder.Services.AddScoped<ICurrencyConversionRateCommandService, CurrencyConversionRateCommandService>();
 builder.Services.AddScoped<ISupplierCommandService, SupplierCommandService>();
+builder.Services.AddScoped<IServiceUserCommandService, ServiceUserCommandService>();
 
 // Salary Query and Command Services
 builder.Services.AddScoped<ISalaryQueryService, SalaryQueryService>();
@@ -277,6 +279,10 @@ v1Group.MapGroup("/suppliers")
     .MapSupplierEndpointsV1()
     .WithTags("Ancillary - Suppliers");
 
+v1Group.MapGroup("/serviceusers")
+    .MapServiceUserEndpointsV1()
+    .WithTags("Ancillary - Service Users");
+
 // ===== SALARY SERVICE ENDPOINTS =====
 v1Group.MapGroup("/salaries")
     .MapSalaryEndpointsV1()
@@ -296,7 +302,7 @@ app.MapGet("/", () => new
     Services = new
     {
         Finance = "Transactions, Accounts, Banks, Balances",
-        Ancillary = "Currencies, Countries, Currency Conversion Rates, Suppliers",
+        Ancillary = "Currencies, Countries, Currency Conversion Rates, Suppliers, Service Users",
         Salary = "Salary Entries",
         Authentication = "Login, Register, JWT Tokens"
     },

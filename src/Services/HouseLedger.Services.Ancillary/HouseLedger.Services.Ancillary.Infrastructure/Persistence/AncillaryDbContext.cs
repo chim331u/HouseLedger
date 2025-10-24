@@ -32,6 +32,7 @@ public class AncillaryDbContext : DbContext
     public DbSet<Country> Countries { get; set; } = null!;
     public DbSet<CurrencyConversionRate> CurrencyConversionRates { get; set; } = null!;
     public DbSet<Supplier> Suppliers { get; set; } = null!;
+    public DbSet<ServiceUser> ServiceUsers { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -44,6 +45,7 @@ public class AncillaryDbContext : DbContext
         modelBuilder.ApplyConfiguration(new CountryConfiguration());
         modelBuilder.ApplyConfiguration(new CurrencyConversionRateConfiguration());
         modelBuilder.ApplyConfiguration(new SupplierConfiguration());
+        modelBuilder.ApplyConfiguration(new ServiceUserConfiguration());
 
         _logger?.LogDebug("Ancillary entity configurations applied successfully");
     }
