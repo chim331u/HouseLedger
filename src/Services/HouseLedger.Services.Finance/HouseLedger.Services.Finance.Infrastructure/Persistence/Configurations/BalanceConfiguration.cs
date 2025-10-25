@@ -35,8 +35,7 @@ public class BalanceConfiguration : IEntityTypeConfiguration<Balance>
             .IsRequired();
 
         builder.Property(b => b.IsActive)
-            .IsRequired()
-            .HasDefaultValue(true);
+            .IsRequired();
 
         builder.Property(b => b.Note)
             .HasMaxLength(1000);

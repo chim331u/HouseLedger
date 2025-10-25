@@ -42,8 +42,7 @@ public class CardConfiguration : IEntityTypeConfiguration<Card>
             .IsRequired();
 
         builder.Property(c => c.IsActive)
-            .IsRequired()
-            .HasDefaultValue(true);
+            .IsRequired();
 
         builder.Property(c => c.Note)
             .HasMaxLength(1000);

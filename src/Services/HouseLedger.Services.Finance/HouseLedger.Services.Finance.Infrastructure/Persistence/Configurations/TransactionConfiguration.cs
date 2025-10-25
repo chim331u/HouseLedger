@@ -43,8 +43,7 @@ public class TransactionConfiguration : IEntityTypeConfiguration<Transaction>
             .IsRequired();
 
         builder.Property(t => t.IsActive)
-            .IsRequired()
-            .HasDefaultValue(true);
+            .IsRequired();
 
         builder.Property(t => t.Note)
             .HasMaxLength(1000);

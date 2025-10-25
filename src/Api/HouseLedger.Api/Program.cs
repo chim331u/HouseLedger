@@ -4,6 +4,7 @@ using HouseLedger.Api.Endpoints.Ancillary;
 using HouseLedger.Api.Endpoints.Auth;
 using HouseLedger.Api.Endpoints.Finance;
 using HouseLedger.Api.Endpoints.Salary;
+using HouseLedger.Api.Endpoints.HouseThings;
 using HouseLedger.Api.Services.Auth;
 using HouseLedger.BuildingBlocks.Authentication.Configuration;
 using HouseLedger.BuildingBlocks.Authentication.Models;
@@ -20,6 +21,9 @@ using HouseLedger.Services.Finance.Infrastructure.Persistence;
 using HouseLedger.Services.Salary.Application.Interfaces;
 using HouseLedger.Services.Salary.Application.Services;
 using HouseLedger.Services.Salary.Infrastructure.Persistence;
+using HouseLedger.Services.HouseThings.Application.Interfaces;
+using HouseLedger.Services.HouseThings.Application.Services;
+using HouseLedger.Services.HouseThings.Infrastructure.Persistence;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -53,6 +57,10 @@ builder.Services.AddDbContext<AppIdentityDbContext>(options =>
 
 // Salary DbContext
 builder.Services.AddDbContext<SalaryDbContext>(options =>
+    options.UseSqlite(connectionString));
+
+// HouseThings DbContext
+builder.Services.AddDbContext<HouseThingsDbContext>(options =>
     options.UseSqlite(connectionString));
 
 // ===== AUTHENTICATION CONFIGURATION =====
@@ -92,18 +100,23 @@ builder.Services.AddMediatR(cfg =>
 // FluentValidation (Finance only - Ancillary and Salary use simple validation)
 builder.Services.AddValidatorsFromAssembly(typeof(AccountQueryService).Assembly);
 
-// AutoMapper (Finance + Ancillary + Salary)
+// AutoMapper (Finance + Ancillary + Salary + HouseThings)
 builder.Services.AddAutoMapper(
     typeof(AccountQueryService).Assembly,           // Finance mappings
     typeof(CurrencyQueryService).Assembly,          // Ancillary mappings
-    typeof(SalaryQueryService).Assembly);          // Salary mappings
+    typeof(SalaryQueryService).Assembly,            // Salary mappings
+    typeof(RoomQueryService).Assembly);             // HouseThings mappings
 
 // Finance Query Services
 builder.Services.AddScoped<IAccountQueryService, AccountQueryService>();
 builder.Services.AddScoped<ITransactionQueryService, TransactionQueryService>();
+builder.Services.AddScoped<IBankQueryService, BankQueryService>();
+builder.Services.AddScoped<IBalanceQueryService, BalanceQueryService>();
 
 // Finance Command Services
 builder.Services.AddScoped<IAccountCommandService, AccountCommandService>();
+builder.Services.AddScoped<IBankCommandService, BankCommandService>();
+builder.Services.AddScoped<IBalanceCommandService, BalanceCommandService>();
 
 // Ancillary Query Services
 builder.Services.AddScoped<ICurrencyQueryService, CurrencyQueryService>();
@@ -122,6 +135,14 @@ builder.Services.AddScoped<IServiceUserCommandService, ServiceUserCommandService
 // Salary Query and Command Services
 builder.Services.AddScoped<ISalaryQueryService, SalaryQueryService>();
 builder.Services.AddScoped<ISalaryCommandService, SalaryCommandService>();
+
+// HouseThings Query Services
+builder.Services.AddScoped<IRoomQueryService, RoomQueryService>();
+builder.Services.AddScoped<IHouseThingQueryService, HouseThingQueryService>();
+
+// HouseThings Command Services
+builder.Services.AddScoped<IRoomCommandService, RoomCommandService>();
+builder.Services.AddScoped<IHouseThingCommandService, HouseThingCommandService>();
 
 // API Versioning (URL path: /api/v1/)
 builder.Services.AddApiVersioning(options =>
@@ -156,7 +177,10 @@ builder.Services.AddHealthChecks()
         tags: new[] { "db", "sql", "sqlite", "identity" })
     .AddDbContextCheck<SalaryDbContext>(
         name: "salary-database",
-        tags: new[] { "db", "sql", "sqlite", "salary" });
+        tags: new[] { "db", "sql", "sqlite", "salary" })
+    .AddDbContextCheck<HouseThingsDbContext>(
+        name: "housethings-database",
+        tags: new[] { "db", "sql", "sqlite", "housethings" });
 
 // OpenAPI/Swagger
 builder.Services.AddEndpointsApiExplorer();
@@ -265,6 +289,14 @@ v1Group.MapGroup("/accounts")
     .MapAccountEndpointsV1()
     .WithTags("Finance - Accounts");
 
+v1Group.MapGroup("/banks")
+    .MapBankEndpointsV1()
+    .WithTags("Finance - Banks");
+
+v1Group.MapGroup("/balances")
+    .MapBalanceEndpointsV1()
+    .WithTags("Finance - Balances");
+
 // ===== ANCILLARY SERVICE ENDPOINTS =====
 v1Group.MapGroup("/currencies")
     .MapCurrencyEndpointsV1()
@@ -291,6 +323,15 @@ v1Group.MapGroup("/salaries")
     .MapSalaryEndpointsV1()
     .WithTags("Salary - Salaries");
 
+// ===== HOUSETHINGS SERVICE ENDPOINTS =====
+v1Group.MapGroup("/rooms")
+    .MapRoomEndpointsV1()
+    .WithTags("HouseThings - Rooms");
+
+v1Group.MapGroup("/housethings")
+    .MapHouseThingEndpointsV1()
+    .WithTags("HouseThings - House Things");
+
 // ===== AUTHENTICATION ENDPOINTS =====
 v1Group.MapGroup("/auth")
     .MapAuthEndpointsV1()
@@ -307,6 +348,7 @@ app.MapGet("/", () => new
         Finance = "Transactions, Accounts, Banks, Balances",
         Ancillary = "Currencies, Countries, Currency Conversion Rates, Suppliers, Service Users",
         Salary = "Salary Entries",
+        HouseThings = "Rooms, House Things",
         Authentication = "Login, Register, JWT Tokens"
     },
     Endpoints = new

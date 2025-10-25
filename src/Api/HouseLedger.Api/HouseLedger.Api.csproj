@@ -26,6 +26,8 @@
     <ProjectReference Include="..\..\BuildingBlocks\HouseLedger.BuildingBlocks.Authentication\HouseLedger.BuildingBlocks.Authentication.csproj" />
     <ProjectReference Include="..\..\Services\HouseLedger.Services.Salary\HouseLedger.Services.Salary.Application\HouseLedger.Services.Salary.Application.csproj" />
     <ProjectReference Include="..\..\Services\HouseLedger.Services.Salary\HouseLedger.Services.Salary.Infrastructure\HouseLedger.Services.Salary.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Services\HouseLedger.Services.HouseThings\HouseLedger.Services.HouseThings.Application\HouseLedger.Services.HouseThings.Application.csproj" />
+    <ProjectReference Include="..\..\Services\HouseLedger.Services.HouseThings\HouseLedger.Services.HouseThings.Infrastructure\HouseLedger.Services.HouseThings.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>

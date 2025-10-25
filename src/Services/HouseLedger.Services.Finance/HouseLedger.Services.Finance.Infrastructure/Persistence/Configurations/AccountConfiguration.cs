@@ -46,8 +46,7 @@ public class AccountConfiguration : IEntityTypeConfiguration<Account>
             .IsRequired();
 
         builder.Property(a => a.IsActive)
-            .IsRequired()
-            .HasDefaultValue(true);
+            .IsRequired();
 
         builder.Property(a => a.Note)
             .HasMaxLength(1000);

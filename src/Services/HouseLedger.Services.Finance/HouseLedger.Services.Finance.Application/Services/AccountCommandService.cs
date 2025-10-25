@@ -33,12 +33,7 @@ public class AccountCommandService : IAccountCommandService
 
         var account = _mapper.Map<Account>(request);
 
-        // Audit fields will be set automatically by DbContext.UpdateAuditFields()
-        var now = DateTime.UtcNow;
-        account.CreatedDate = now;
-        account.LastUpdatedDate = now;
-        account.IsActive = true;
-
+        // Audit fields (CreatedDate, LastUpdatedDate, IsActive) will be set automatically by DbContext.UpdateAuditFields()
         _context.Accounts.Add(account);
         await _context.SaveChangesAsync(cancellationToken);
 

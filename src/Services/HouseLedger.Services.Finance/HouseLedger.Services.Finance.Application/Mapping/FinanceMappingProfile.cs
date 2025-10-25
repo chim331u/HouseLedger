@@ -1,6 +1,7 @@
 using AutoMapper;
 using HouseLedger.Services.Finance.Application.Contracts.Accounts;
 using HouseLedger.Services.Finance.Application.Contracts.Balances;
+using HouseLedger.Services.Finance.Application.Contracts.Banks;
 using HouseLedger.Services.Finance.Application.Contracts.Transactions;
 using HouseLedger.Services.Finance.Domain.Entities;
 using HouseLedger.Services.Finance.Domain.ValueObjects;
@@ -62,5 +63,40 @@ public class FinanceMappingProfile : Profile
         // Balance → BalanceDto
         CreateMap<Balance, BalanceDto>()
             .ForMember(dest => dest.AccountName, opt => opt.MapFrom(src => src.Account != null ? src.Account.Name : null));
+
+        // CreateBalanceRequest → Balance
+        CreateMap<CreateBalanceRequest, Balance>()
+            .ForMember(dest => dest.Id, opt => opt.Ignore())
+            .ForMember(dest => dest.Account, opt => opt.Ignore())
+            .ForMember(dest => dest.CreatedDate, opt => opt.Ignore())
+            .ForMember(dest => dest.LastUpdatedDate, opt => opt.Ignore())
+            .ForMember(dest => dest.IsActive, opt => opt.MapFrom(src => true));
+
+        // UpdateBalanceRequest → Balance
+        CreateMap<UpdateBalanceRequest, Balance>()
+            .ForMember(dest => dest.Id, opt => opt.Ignore())
+            .ForMember(dest => dest.Account, opt => opt.Ignore())
+            .ForMember(dest => dest.CreatedDate, opt => opt.Ignore())
+            .ForMember(dest => dest.LastUpdatedDate, opt => opt.Ignore())
+            .ForMember(dest => dest.IsActive, opt => opt.Ignore());
+
+        // Bank → BankDto
+        CreateMap<Bank, BankDto>();
+
+        // CreateBankRequest → Bank
+        CreateMap<CreateBankRequest, Bank>()
+            .ForMember(dest => dest.Id, opt => opt.Ignore())
+            .ForMember(dest => dest.Accounts, opt => opt.Ignore())
+            .ForMember(dest => dest.CreatedDate, opt => opt.Ignore())
+            .ForMember(dest => dest.LastUpdatedDate, opt => opt.Ignore())
+            .ForMember(dest => dest.IsActive, opt => opt.MapFrom(src => true));
+
+        // UpdateBankRequest → Bank
+        CreateMap<UpdateBankRequest, Bank>()
+            .ForMember(dest => dest.Id, opt => opt.Ignore())
+            .ForMember(dest => dest.Accounts, opt => opt.Ignore())
+            .ForMember(dest => dest.CreatedDate, opt => opt.Ignore())
+            .ForMember(dest => dest.LastUpdatedDate, opt => opt.Ignore())
+            .ForMember(dest => dest.IsActive, opt => opt.Ignore());
     }
 }

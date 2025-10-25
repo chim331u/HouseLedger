@@ -52,8 +52,7 @@ public class BankConfiguration : IEntityTypeConfiguration<Bank>
             .IsRequired();
 
         builder.Property(b => b.IsActive)
-            .IsRequired()
-            .HasDefaultValue(true);
+            .IsRequired();
 
         builder.Property(b => b.Note)
             .HasMaxLength(1000);

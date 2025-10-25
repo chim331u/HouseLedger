@@ -1,58 +1,52 @@
-using HouseLedger.Services.Finance.Domain.Entities;
-using HouseLedger.Services.Finance.Infrastructure.Persistence.Configurations;
+using HouseLedger.Services.HouseThings.Domain.Entities;
+using HouseLedger.Services.HouseThings.Infrastructure.Persistence.Configurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace HouseLedger.Services.Finance.Infrastructure.Persistence;
+namespace HouseLedger.Services.HouseThings.Infrastructure.Persistence;
 
 /// <summary>
-/// DbContext for Finance service.
+/// DbContext for HouseThings service.
 /// Points to existing MM.db database with table mappings to old schema.
 /// </summary>
-public class FinanceDbContext : DbContext
+public class HouseThingsDbContext : DbContext
 {
-    private readonly ILogger<FinanceDbContext>? _logger;
+    private readonly ILogger<HouseThingsDbContext>? _logger;
 
-    public FinanceDbContext(DbContextOptions<FinanceDbContext> options)
+    public HouseThingsDbContext(DbContextOptions<HouseThingsDbContext> options)
         : base(options)
     {
     }
 
-    public FinanceDbContext(
-        DbContextOptions<FinanceDbContext> options,
-        ILogger<FinanceDbContext> logger)
+    public HouseThingsDbContext(
+        DbContextOptions<HouseThingsDbContext> options,
+        ILogger<HouseThingsDbContext> logger)
         : base(options)
     {
         _logger = logger;
-        _logger.LogDebug("FinanceDbContext instance created");
+        _logger.LogDebug("HouseThingsDbContext instance created");
     }
 
-    // DbSets for Finance entities
-    public DbSet<Transaction> Transactions { get; set; } = null!;
-    public DbSet<Account> Accounts { get; set; } = null!;
-    public DbSet<Balance> Balances { get; set; } = null!;
-    public DbSet<Bank> Banks { get; set; } = null!;
-    public DbSet<Card> Cards { get; set; } = null!;
+    // DbSets for HouseThings entities
+    public DbSet<Room> Rooms { get; set; } = null!;
+    public DbSet<HouseThing> HouseThings { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
 
-        _logger?.LogDebug("Configuring Finance entity mappings");
+        _logger?.LogDebug("Configuring HouseThings entity mappings");
 
         // Apply entity configurations
-        modelBuilder.ApplyConfiguration(new TransactionConfiguration());
-        modelBuilder.ApplyConfiguration(new AccountConfiguration());
-        modelBuilder.ApplyConfiguration(new BalanceConfiguration());
-        modelBuilder.ApplyConfiguration(new BankConfiguration());
-        modelBuilder.ApplyConfiguration(new CardConfiguration());
+        modelBuilder.ApplyConfiguration(new RoomConfiguration());
+        modelBuilder.ApplyConfiguration(new HouseThingConfiguration());
 
-        _logger?.LogDebug("Finance entity configurations applied successfully");
+        _logger?.LogDebug("HouseThings entity configurations applied successfully");
     }
 
     public override int SaveChanges()
     {
-        _logger?.LogDebug("SaveChanges called on FinanceDbContext");
+        _logger?.LogDebug("SaveChanges called on HouseThingsDbContext");
         UpdateAuditFields();
 
         try
@@ -63,14 +57,14 @@ public class FinanceDbContext : DbContext
         }
         catch (Exception ex)
         {
-            _logger?.LogError(ex, "Error occurred while saving changes to Finance database");
+            _logger?.LogError(ex, "Error occurred while saving changes to HouseThings database");
             throw;
         }
     }
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-        _logger?.LogDebug("SaveChangesAsync called on FinanceDbContext");
+        _logger?.LogDebug("SaveChangesAsync called on HouseThingsDbContext");
         UpdateAuditFields();
 
         try
@@ -81,7 +75,7 @@ public class FinanceDbContext : DbContext
         }
         catch (Exception ex)
         {
-            _logger?.LogError(ex, "Error occurred while saving changes to Finance database asynchronously");
+            _logger?.LogError(ex, "Error occurred while saving changes to HouseThings database asynchronously");
             throw;
         }
     }
