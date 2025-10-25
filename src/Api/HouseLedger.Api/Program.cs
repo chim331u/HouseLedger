@@ -102,6 +102,9 @@ builder.Services.AddAutoMapper(
 builder.Services.AddScoped<IAccountQueryService, AccountQueryService>();
 builder.Services.AddScoped<ITransactionQueryService, TransactionQueryService>();
 
+// Finance Command Services
+builder.Services.AddScoped<IAccountCommandService, AccountCommandService>();
+
 // Ancillary Query Services
 builder.Services.AddScoped<ICurrencyQueryService, CurrencyQueryService>();
 builder.Services.AddScoped<ICountryQueryService, CountryQueryService>();

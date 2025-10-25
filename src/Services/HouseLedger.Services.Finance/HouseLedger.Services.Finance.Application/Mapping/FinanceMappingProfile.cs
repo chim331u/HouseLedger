@@ -37,6 +37,28 @@ public class FinanceMappingProfile : Profile
         CreateMap<Account, AccountDto>()
             .ForMember(dest => dest.BankName, opt => opt.MapFrom(src => src.Bank != null ? src.Bank.Name : null));
 
+        // CreateAccountRequest → Account
+        CreateMap<CreateAccountRequest, Account>()
+            .ForMember(dest => dest.Id, opt => opt.Ignore())
+            .ForMember(dest => dest.Bank, opt => opt.Ignore())
+            .ForMember(dest => dest.Transactions, opt => opt.Ignore())
+            .ForMember(dest => dest.Balances, opt => opt.Ignore())
+            .ForMember(dest => dest.Cards, opt => opt.Ignore())
+            .ForMember(dest => dest.CreatedDate, opt => opt.Ignore())
+            .ForMember(dest => dest.LastUpdatedDate, opt => opt.Ignore())
+            .ForMember(dest => dest.IsActive, opt => opt.MapFrom(src => true));
+
+        // UpdateAccountRequest → Account
+        CreateMap<UpdateAccountRequest, Account>()
+            .ForMember(dest => dest.Id, opt => opt.Ignore())
+            .ForMember(dest => dest.Bank, opt => opt.Ignore())
+            .ForMember(dest => dest.Transactions, opt => opt.Ignore())
+            .ForMember(dest => dest.Balances, opt => opt.Ignore())
+            .ForMember(dest => dest.Cards, opt => opt.Ignore())
+            .ForMember(dest => dest.CreatedDate, opt => opt.Ignore())
+            .ForMember(dest => dest.LastUpdatedDate, opt => opt.Ignore())
+            .ForMember(dest => dest.IsActive, opt => opt.Ignore());
+
         // Balance → BalanceDto
         CreateMap<Balance, BalanceDto>()
             .ForMember(dest => dest.AccountName, opt => opt.MapFrom(src => src.Account != null ? src.Account.Name : null));

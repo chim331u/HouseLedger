@@ -77,7 +77,8 @@ public class CurrencyConversionRateQueryService : ICurrencyConversionRateQuerySe
         _logger.LogDebug("Getting currency conversion rate for {CurrencyCode} on {Date}", currencyCode, date);
 
         var rate = await _context.CurrencyConversionRates
-            .Where(c => c.CurrencyCodeAlf3 == currencyCode && c.ReferringDate.Date == date.Date && c.IsActive)
+            .Where(c => c.CurrencyCodeAlf3 == currencyCode && c.IsActive)
+            .OrderByDescending(c => c.CreatedDate)
             .FirstOrDefaultAsync(cancellationToken);
 
         if (rate == null)
